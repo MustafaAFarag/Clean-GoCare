@@ -9,6 +9,8 @@ import { ThemeState } from "../../../../../store/state/theme.state";
 import { ThemeOptionState } from "../../../../../store/state/theme-option.state";
 import { Observable } from "rxjs";
 import { Option } from "../../../../../interface/theme-option.interface";
+import { environment } from "../../../../../../../environments/environment.development";
+import { ServicesService } from "../../../../../../components/services/services/services.service";
 
 @Component({
   selector: "app-image-variant",
@@ -19,12 +21,13 @@ import { Option } from "../../../../../interface/theme-option.interface";
 })
 export class ProductBoxImageVariantComponent {
   @Input() thumbnail?: Attachment | null;
-  @Input() gallery_images: any;
+  @Input() gallery_images?: any;
   @Input() product: Product;
 
   @Select(ThemeOptionState.themeOptions) themeOptions$: Observable<Option>;
 
   public variant: string = "image_zoom";
+  public testProducts: any[];
   public flipImage: Attachment[] = [];
   public imageType = [
     "image/apng",
@@ -43,10 +46,25 @@ export class ProductBoxImageVariantComponent {
     autoplay: false, // Initialize autoplay as false
   };
 
+  constructor(private servicesService: ServicesService) {}
+
+  getFullImageUrl(relativePath?: string): string {
+    if (!relativePath) {
+      return "assets/default-image.jpg";
+    }
+    return `${environment.apiUrl}${relativePath.replace(/\\/g, "/")}`;
+  }
+
   ngOnInit() {
     this.themeOptions$.subscribe((options) => {
       this.variant = options.product.image_variant;
     });
+
+    this.servicesService
+      .getAllProductVariantsForClient()
+      .subscribe((response) => {
+        this.testProducts = response.result.items;
+      });
 
     this.flipImage = this.gallery_images.map((image: any) => {
       let images;

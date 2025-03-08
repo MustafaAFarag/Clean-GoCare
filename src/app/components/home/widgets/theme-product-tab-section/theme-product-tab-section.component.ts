@@ -66,6 +66,7 @@ export class ThemeProductTabSectionComponent {
 
   public categories: Category[];
   public realCategories: RealCategory[] = [];
+  public realProducts: any[] = [];
   public categoryProduct: Category[];
   public activeCategory: number;
   private categorySubscription: Subscription;
@@ -87,6 +88,12 @@ export class ThemeProductTabSectionComponent {
     this.servicesService.getCategories().subscribe((response) => {
       this.realCategories = response.result;
     });
+
+    this.servicesService
+      .getAllProductVariantsForClient()
+      .subscribe((response) => {
+        this.realProducts = response.result.items;
+      });
   }
 
   ngOnChanges() {

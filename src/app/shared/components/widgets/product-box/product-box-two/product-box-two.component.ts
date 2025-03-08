@@ -43,11 +43,11 @@ export interface result {
   styleUrl: "./product-box-two.component.scss",
 })
 export class ProductBoxTwoComponent {
-  @Input() product: Product;
+  @Input() product: any;
 
   public selectedVariation: Variation;
 
-  constructor(private store: Store, private servicesService: ServicesService) {}
+  constructor(private store: Store) {}
 
   selectedVariant(variation: Variation) {
     if (variation) {
@@ -55,17 +55,8 @@ export class ProductBoxTwoComponent {
     }
   }
 
-  getFullImageUrl(relativePath?: string): string {
-    if (!relativePath) return "assets/default-image.jpg";
-    return `${environment.apiUrl}${relativePath.replace(/\\/g, "/")}`;
-  }
-
   ngOnInit() {
-    this.servicesService
-      .getAllProductVariantsForClient()
-      .subscribe((response) => {
-        console.log(response.result);
-      });
+    console.log(this.product);
   }
 
   addToWishlist(product: Product) {

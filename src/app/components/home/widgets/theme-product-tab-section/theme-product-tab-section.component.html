@@ -118,7 +118,7 @@
         } } }@else { @if(productService.skeletonCategoryProductLoader){
         @for(item of skeletonItems; track item){
         <app-skeleton-product-box></app-skeleton-product-box>
-        } } @else { @for(product of (product$ | async); track product){
+        } } @else { @for(product of realProducts; track product) {
         <app-product-box [product]="product" [style]="style"></app-product-box>
         } } }
       </div>
