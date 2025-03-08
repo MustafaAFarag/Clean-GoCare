@@ -46,9 +46,8 @@ export class ProductBoxTwoComponent {
   @Input() product: Product;
 
   public selectedVariation: Variation;
-  public realCategories: RealCategory[] = [];
 
-  constructor(private store: Store, private ServicesService: ServicesService) {}
+  constructor(private store: Store, private servicesService: ServicesService) {}
 
   selectedVariant(variation: Variation) {
     if (variation) {
@@ -62,10 +61,11 @@ export class ProductBoxTwoComponent {
   }
 
   ngOnInit() {
-    this.ServicesService.getCategories().subscribe((response) => {
-      this.realCategories = response.result;
-      console.log(this.realCategories);
-    });
+    this.servicesService
+      .getAllProductVariantsForClient()
+      .subscribe((response) => {
+        console.log(response.result);
+      });
   }
 
   addToWishlist(product: Product) {

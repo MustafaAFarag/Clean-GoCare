@@ -21,6 +21,7 @@ import { productSlider4 } from "../../../../shared/data/owl-carousel";
 import { ProductTabSection } from "../../../../shared/interface/theme.interface";
 import { ProductService } from "../../../../shared/services/product.service";
 import { SkeletonProductBoxComponent } from "../../../../shared/components/widgets/product-box/widgets/skeleton-product-box/skeleton-product-box.component";
+import { ServicesService } from "../../../services/services/services.service";
 
 @Component({
   selector: "app-theme-product-tab-section",
@@ -38,7 +39,6 @@ import { SkeletonProductBoxComponent } from "../../../../shared/components/widge
 export class ThemeProductTabSectionComponent {
   @Select(CategoryState.category) category$: Observable<CategoryModel>;
   @Select(ProductState.categoryProducts) product$: Observable<Product[]>;
-  @Input() testingCategories: RealCategory[] = [];
 
   @Input() categoryIds?: number[];
   @Input() slider: boolean = false;
@@ -65,6 +65,7 @@ export class ThemeProductTabSectionComponent {
   );
 
   public categories: Category[];
+  public realCategories: RealCategory[] = [];
   public categoryProduct: Category[];
   public activeCategory: number;
   private categorySubscription: Subscription;
@@ -76,7 +77,17 @@ export class ThemeProductTabSectionComponent {
     category_id: "",
   };
 
-  constructor(private store: Store, public productService: ProductService) {}
+  constructor(
+    private store: Store,
+    public productService: ProductService,
+    private servicesService: ServicesService
+  ) {}
+
+  ngOnInit() {
+    this.servicesService.getCategories().subscribe((response) => {
+      this.realCategories = response.result;
+    });
+  }
 
   ngOnChanges() {
     // Get Category
