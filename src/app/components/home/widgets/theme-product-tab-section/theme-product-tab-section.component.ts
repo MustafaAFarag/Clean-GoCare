@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
+import { HttpClient } from "@angular/common/http";
 import { CarouselModule, OwlOptions } from "ngx-owl-carousel-o";
 import { Observable, Subscription } from "rxjs";
 
@@ -36,7 +37,7 @@ import { ServicesService } from "../../../services/services/services.service";
   templateUrl: "./theme-product-tab-section.component.html",
   styleUrl: "./theme-product-tab-section.component.scss",
 })
-export class ThemeProductTabSectionComponent {
+export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
   @Select(CategoryState.category) category$: Observable<CategoryModel>;
   @Select(ProductState.categoryProducts) product$: Observable<Product[]>;
 
@@ -54,26 +55,21 @@ export class ThemeProductTabSectionComponent {
   @Input() options: OwlOptions = productSlider4;
 
   public skeletonItems = Array.from(
-    {
-      length: this.showItems
-        ? this.showItems
-        : this.showItems
-        ? this.showItems
-        : 4,
-    },
+    { length: this.showItems || 4 },
     (_, index) => index
   );
 
-  public categories: Category[];
-  public realCategories: RealCategory[] = [];
-  public realProducts: any[] = [];
-  public categoryProduct: Category[];
+  public categories: Category[] = [];
+  public products: Product[] = [];
+  public allProducts: Product[] = [];
   public activeCategory: number;
+  public selectedCategorySlug: string = "";
   private categorySubscription: Subscription;
+  private productSubscription: Subscription;
 
   public filter: Params = {
-    page: 1, // Current page number
-    paginate: 4, // Display per page,
+    page: 1,
+    paginate: 4,
     status: 1,
     category_id: "",
   };
@@ -81,34 +77,78 @@ export class ThemeProductTabSectionComponent {
   constructor(
     private store: Store,
     public productService: ProductService,
-    private servicesService: ServicesService
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
-    this.servicesService.getCategories().subscribe((response) => {
-      this.realCategories = response.result;
+    this.fetchCategoriesFromAPI();
+    this.fetchProductsFromAPI();
+  }
+
+  fetchProductsFromAPI() {
+    this.http
+      .get<Product[]>(
+        "https://run.mocky.io/v3/64f93d7d-04ed-427b-ad0d-4d74ab7b00a6"
+      )
+      .subscribe(
+        (response) => {
+          this.allProducts = response;
+          this.filterProducts();
+        },
+        (error) => {
+          console.error("Error fetching products:", error);
+        }
+      );
+  }
+
+  fetchCategoriesFromAPI() {
+    this.http
+      .get<Category[]>(
+        "https://run.mocky.io/v3/17e24292-75ba-4fe9-96fc-36f39409c51d"
+      )
+      .subscribe(
+        (response) => {
+          this.categories = response;
+          if (this.categories.length) {
+            this.activeCategory = this.categories[0].id;
+            this.selectedCategorySlug = this.categories[0].slug;
+            this.filterProducts();
+          }
+          console.log("Fetched Categories:", this.categories);
+        },
+        (error) => {
+          console.error("Error fetching categories:", error);
+        }
+      );
+  }
+
+  filterProducts() {
+    if (!this.allProducts.length) return;
+
+    // Filter products where filterCategory matches the selectedCategorySlug
+    this.products = this.allProducts.filter((product) => {
+      return product.filterCategory === this.selectedCategorySlug;
     });
 
-    this.servicesService
-      .getAllProductVariantsForClient()
-      .subscribe((response) => {
-        this.realProducts = response.result.items;
-      });
+    console.log("Filtered Products:", this.products);
+    console.log("Filter criteria:", {
+      filterCategory: this.selectedCategorySlug,
+    });
+  }
+
+  changeTab(category: Category) {
+    this.activeCategory = category.id;
+    this.selectedCategorySlug = category.slug;
+    this.filterProducts();
   }
 
   ngOnChanges() {
-    // Get Category
     this.filter["paginate"] = this.showItems;
     this.skeletonItems = Array.from(
-      {
-        length: this.showItems
-          ? this.showItems
-          : this.showItems
-          ? this.showItems
-          : 4,
-      },
+      { length: this.showItems || 4 },
       (_, index) => index
     );
+
     if (this.categoryIds && this.categoryIds.length) {
       this.categorySubscription = this.category$.subscribe((res) => {
         if (res) {
@@ -119,12 +159,8 @@ export class ThemeProductTabSectionComponent {
 
           if (this.categories.length) {
             this.activeCategory = this.categories[0].id;
-
-            this.filter["category_id"] = this.categories[0].id;
-
-            if (this.filter["category_id"]) {
-              this.store.dispatch(new GetCategoryProducts(this.filter));
-            }
+            this.selectedCategorySlug = this.categories[0].slug;
+            this.filterProducts();
           }
         }
       });
@@ -153,16 +189,12 @@ export class ThemeProductTabSectionComponent {
     return matchedCategories;
   }
 
-  changeTab(value: Category) {
-    this.activeCategory = value.id;
-
-    (this.filter["category_id"] = value.id),
-      this.store.dispatch(new GetCategoryProducts(this.filter));
-  }
-
   ngOnDestroy() {
     if (this.categorySubscription) {
       this.categorySubscription.unsubscribe();
+    }
+    if (this.productSubscription) {
+      this.productSubscription.unsubscribe();
     }
   }
 }

@@ -14,8 +14,9 @@ export interface ProductModel extends PaginateModel {
 
 export interface Product {
   highlightedName: string;
-  mainImageUrl?: any;
   categories_ids: number[];
+  mainImageUrl?: string;
+  filterCategory?: string;
   id: number;
   name: string;
   slug: string;

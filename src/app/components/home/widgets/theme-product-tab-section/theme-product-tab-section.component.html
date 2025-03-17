@@ -51,11 +51,6 @@
         category.name
       }}</a>
     </li>
-    <!-- HERE WORKING -->
-    } @for(category of realCategories.slice(0,5); track category){
-    <li>
-      {{ category.name.en }}
-    </li>
     }
   </ul>
   }
@@ -76,10 +71,10 @@
           </ng-template>
           }
         </owl-carousel-o>
-        } @else { @if((product$ | async)?.length){
+        } @else { @if(products.length){
 
         <owl-carousel-o [options]="options">
-          @for(product of (product$ | async); track product){
+          @for(product of products; track product){
           <ng-template carouselSlide>
             <app-product-box
               [product]="product"
@@ -88,7 +83,7 @@
           </ng-template>
           }
         </owl-carousel-o>
-        } @if(!(product$ | async)?.length){
+        } @if(!products.length){
         <app-no-data [class]="'no-data-added'" [text]="'no_product'">
         </app-no-data>
         } }
@@ -106,7 +101,7 @@
         <app-skeleton-product-box
           [style]="product_box_style"
         ></app-skeleton-product-box>
-        } } @else { @for(product of (product$ | async); track product){
+        } } @else { @for(product of products; track product){
         <div class="tab-box">
           <div class="product-box2">
             <app-product-box
@@ -118,12 +113,11 @@
         } } }@else { @if(productService.skeletonCategoryProductLoader){
         @for(item of skeletonItems; track item){
         <app-skeleton-product-box></app-skeleton-product-box>
-        } } @else { @for(product of realProducts; track product) {
+        } } @else { @for(product of products; track product){
         <app-product-box [product]="product" [style]="style"></app-product-box>
         } } }
       </div>
-      } @if(!(product$ | async)?.length &&
-      !productService.skeletonCategoryProductLoader){
+      } @if(!products.length && !productService.skeletonCategoryProductLoader){
       <app-no-data [class]="'no-data-added'" [text]="'no_product'">
       </app-no-data>
       } }
