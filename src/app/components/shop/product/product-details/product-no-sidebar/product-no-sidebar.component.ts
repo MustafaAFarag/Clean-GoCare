@@ -74,6 +74,10 @@ export class ProductNoSidebarComponent {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
+  ngOnInit() {
+    console.log(this.product);
+  }
+
   selectedVariant(variant: Variation) {
     this.selectedVariation = variant;
   }

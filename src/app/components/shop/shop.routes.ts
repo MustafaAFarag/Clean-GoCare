@@ -21,70 +21,67 @@ import { OrderDetailsComponent } from "./order-details/order-details.component";
 
 export const shop: Routes = [
   {
-    path: 'cart',
-    component: CartComponent
+    path: "cart",
+    component: CartComponent,
   },
   {
     path: "collections",
-    component: CollectionComponent
+    component: CollectionComponent,
   },
   {
-    path: 'product/:slug',
+    path: "product/:slug",
     component: ProductComponent,
-    resolve: {
-      data: ProductResolver
-    }
   },
   {
-    path: 'wishlist',
+    path: "wishlist",
     component: WishlistComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
-    path: 'compare',
+    path: "compare",
     component: CompareComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
-    path: 'checkout',
+    path: "checkout",
     component: CheckoutComponent,
-    canActivate: [CheckoutGuard]
+    canActivate: [CheckoutGuard],
   },
   {
-    path: 'seller/become-seller',
-    component: SellerComponent
+    path: "seller/become-seller",
+    component: SellerComponent,
   },
   {
-    path: 'seller/stores',
-    component: SellerStoreComponent
+    path: "seller/stores",
+    component: SellerStoreComponent,
   },
   {
-    path: 'seller/store/:slug',
+    path: "seller/store/:slug",
     component: SellerDetailsComponent,
     resolve: {
-      data: StoreResolver
-    }
+      data: StoreResolver,
+    },
   },
   {
-    path: 'order/tracking',
-    component: OrderTrackingComponent
+    path: "order/tracking",
+    component: OrderTrackingComponent,
   },
   {
-    path: 'order/details',
-    component: OrderDetailsComponent
+    path: "order/details",
+    component: OrderDetailsComponent,
   },
   {
-    path: 'brand/:slug',
+    path: "brand/:slug",
     component: BrandComponent,
     resolve: {
-      data: BrandResolver
-    }
+      data: BrandResolver,
+    },
   },
   {
-    path: 'category/:slug',
+    path: "category/:slug",
     component: CategoryComponent,
     resolve: {
-      data: CategoryResolver
-    }
+      data: CategoryResolver,
+    },
   },
-]
+];
