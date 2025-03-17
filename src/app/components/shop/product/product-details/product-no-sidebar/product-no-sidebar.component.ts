@@ -4,6 +4,8 @@ import {
   Input,
   PLATFORM_ID,
   ViewChild,
+  OnChanges,
+  SimpleChanges,
 } from "@angular/core";
 import {
   Product,
@@ -53,7 +55,7 @@ import { HttpClient } from "@angular/common/http";
   templateUrl: "./product-no-sidebar.component.html",
   styleUrl: "./product-no-sidebar.component.scss",
 })
-export class ProductNoSidebarComponent {
+export class ProductNoSidebarComponent implements OnChanges {
   @Input() product: Product;
   @Input() option: Option | null;
   @ViewChild("thumbnailCarousel") thumbnailCarousel: CarouselComponent;
@@ -74,8 +76,10 @@ export class ProductNoSidebarComponent {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  ngOnInit() {
-    console.log(this.product);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["product"] && changes["product"].currentValue) {
+      console.log("PRODUCT CHANGED:", this.product);
+    }
   }
 
   selectedVariant(variant: Variation) {
@@ -103,6 +107,7 @@ export class ProductNoSidebarComponent {
     const slideId = event.slides[0].id;
     if (
       this.selectedVariation &&
+      this.selectedVariation.variation_galleries &&
       this.selectedVariation.variation_galleries.length
     ) {
       const matchingImage = this.selectedVariation.variation_galleries.find(

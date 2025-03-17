@@ -43,7 +43,7 @@ export interface result {
   styleUrl: "./product-box-two.component.scss",
 })
 export class ProductBoxTwoComponent {
-  @Input() product: any;
+  @Input() product: Product;
 
   public selectedVariation: Variation;
 
