@@ -16,8 +16,8 @@
     <option selected disabled>
       {{ "choose" | translate }} {{ attribute?.name }}
     </option>
-    @for(value of attribute.attribute_values; let attributeIndex = $index; track
-    value){ @if(attributeValues.includes(value.id)){
+    @for(value of attribute.attribute_values; track value; let attributeIndex =
+    $index){
     <option
       [selected]="
         variantIds.includes(value.id) &&
@@ -28,7 +28,7 @@
     >
       {{ value?.value }}
     </option>
-    } }
+    }
   </select>
   }@else {
   <ul
@@ -40,8 +40,7 @@
     "
   >
     @for(value of attribute.attribute_values; track value; let attributeIndex =
-    $index){ @if(attributeValues.includes(value.id)){ @if(attribute.style ==
-    'color'){
+    $index){ @if(attribute.style == 'color'){
     <li
       class="bg-light"
       [class.active]="
@@ -190,7 +189,7 @@
         {{ value?.value }}
       </app-button>
     </li>
-    } } }
+    } }
   </ul>
   }
 </div>

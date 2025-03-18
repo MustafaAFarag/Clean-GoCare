@@ -89,7 +89,7 @@ export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
   fetchProductsFromAPI() {
     this.http
       .get<Product[]>(
-        "https://run.mocky.io/v3/a3afb419-1b62-4317-8f7f-1399594c5200"
+        "https://run.mocky.io/v3/08525c91-a54c-48ca-ae19-5b3d5509e1ad"
       )
       .subscribe(
         (response) => {
@@ -107,7 +107,7 @@ export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
   fetchCategoriesFromAPI() {
     this.http
       .get<Category[]>(
-        "https://run.mocky.io/v3/c803621b-48a7-47c2-a1a8-f010196d737b"
+        "https://run.mocky.io/v3/f7445a7d-c63f-4cdf-aa4b-a700fae3b5b5"
       )
       .subscribe(
         (response) => {
