@@ -11,7 +11,7 @@
     },
     "home_banner": {
       "status": true,
-      "image_url": "/images/settings/main-berry.jpg",
+      "image_url": "/images/settings/raspberries.jpg",
       "redirect_link": {
         "link": "test_url",
         "link_type": "collection"

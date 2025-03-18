@@ -1,6 +1,9 @@
-<header class="header-style-1" [ngClass]="stick && sticky ? 'sticky fixed' : ''">
+<header
+  class="header-style-1"
+  [ngClass]="stick && sticky ? 'sticky fixed' : ''"
+>
   @if(data?.header?.page_top_bar_enable){
-    <app-top-bar [data]="data"></app-top-bar>
+  <app-top-bar [data]="data"></app-top-bar>
   }
   <div class="bg-light-xl">
     <div class="container">
@@ -9,22 +12,39 @@
           <div class="main-menu">
             <div class="menu-left">
               <div class="toggle-nav" (click)="mainMenuOpen()">
-                <i class="ri-menu-line sidebar-bar">
-                </i>
+                <i class="ri-menu-line sidebar-bar"> </i>
               </div>
               <div class="brand-logo me-lg-4 me-0">
                 <app-header-logo [logo]="logo"></app-header-logo>
               </div>
-              <nav class="navbar navbar-expand-sm navbar-light pe-0 d-none d-lg-block">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <nav
+                class="navbar navbar-expand-sm navbar-light pe-0 d-none d-lg-block"
+              >
+                <button
+                  class="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
                   <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div
+                  class="collapse navbar-collapse"
+                  id="navbarSupportedContent"
+                >
                   <ul class="navbar-nav category-nav me-auto pt-0">
                     @for(category of categories; track category){
-                      <li class="nav-item" [class.active]="activeCategory == category.id">
-                        <a class="nav-link" href="javascript:void(0)">{{ category.name }}</a>
-                      </li>
+                    <li
+                      class="nav-item"
+                      [class.active]="activeCategory == category.id"
+                    >
+                      <a class="nav-link" href="javascript:void(0)">{{
+                        category.name
+                      }}</a>
+                    </li>
                     }
                   </ul>
                 </div>
@@ -39,8 +59,7 @@
                     </li>
                     <li class="onhover-div">
                       <a href="javascript:void(0)" [routerLink]="['/wishlist']">
-                        <i class="ri-heart-line">
-                        </i>
+                        <i class="ri-heart-line"> </i>
                       </a>
                     </li>
                     <li class="onhover-div">

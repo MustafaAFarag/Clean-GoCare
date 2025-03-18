@@ -4,7 +4,7 @@
 body {
   font-family: "Montserrat", sans-serif;
   position: relative;
-  background: $white;
+  background: #fafaf2;
   font-size: 14px;
 
   &.christmas {
@@ -14,7 +14,7 @@ body {
   }
 
   &.mulish-font {
-    font-family: 'Mulish', sans-serif;
+    font-family: "Mulish", sans-serif;
   }
 
   &.single-product {
@@ -131,7 +131,7 @@ label {
 .form-select {
   &:focus {
     box-shadow: none;
-    border-color: #ced4da
+    border-color: #ced4da;
   }
 }
 
@@ -140,11 +140,11 @@ label {
 }
 
 .font-fraunces {
-  font-family: 'Fraunces', serif;
+  font-family: "Fraunces", serif;
 }
 
 .font-courgette {
-  font-family: 'Courgette', cursive;
+  font-family: "Courgette", cursive;
   text-transform: capitalize !important;
 }
 

@@ -14,10 +14,10 @@ $white: #ffffff;
 $white-dark: #eeeeee;
 $black: #000000;
 $grey01: #111111;
-$dark-font: #222222;
+$dark-font: #22060e;
 $grey-dark: #2d2a25;
 $font-color: #333333;
-$grey: #777777;
+$grey: #22060e;
 $grey-light: #a1a1a1;
 $border: #dddada;
 $round-border: #dddddd;
@@ -64,10 +64,11 @@ $white-5: #cfd4da;
 
 /*  Theme colors variables */
 $success-color: #81ba00;
-$light : #f6f6f6;
+$light: #f6f6f6;
 
 //Break Points settings
-$min-breakpoints: (xs: 480px,
+$min-breakpoints: (
+  xs: 480px,
   sm: 576px,
   md: 768px,
   lg: 992px,
@@ -75,7 +76,8 @@ $min-breakpoints: (xs: 480px,
   2xl: 1400px,
 );
 
-$max-breakpoints: (2xs: 360px,
+$max-breakpoints: (
+  2xs: 360px,
   xs: 480px,
   sm: 575px,
   md: 767px,
