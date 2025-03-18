@@ -69,6 +69,10 @@ export class ProductNoSidebarComponent implements OnChanges {
   public productThumbSlider = data.productThumbSlider;
   public isBrowser: boolean;
 
+  // Placeholder image URL
+  public placeholderImage =
+    "https://via.assets.so/img.jpg?w=400&h=150&tc=blue&bg=%23cecece";
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private http: HttpClient
@@ -79,7 +83,13 @@ export class ProductNoSidebarComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes["product"] && changes["product"].currentValue) {
       console.log("PRODUCT CHANGED:", this.product);
+      if (this.product.product_thumbnail?.original_url) {
+        console.log("THUMBNAIL", this.product.product_thumbnail.original_url);
+      } else {
+        console.log("Using placeholder for main thumbnail");
+      }
     }
+    console.log();
   }
 
   selectedVariant(variant: Variation) {
@@ -121,6 +131,20 @@ export class ProductNoSidebarComponent implements OnChanges {
     } else {
       this.activeSlide = slideId;
       this.thumbnailCarousel.to(this.activeSlide);
+    }
+  }
+
+  // Helper method to get image URL from gallery item
+  getImageUrl(image: any): string {
+    if (
+      image?.original_url &&
+      image.original_url !== "assets/images/placeholder/product.png"
+    ) {
+      return image.original_url;
+    } else if (image?.asset_url) {
+      return image.asset_url;
+    } else {
+      return this.placeholderImage;
     }
   }
 }

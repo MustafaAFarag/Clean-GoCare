@@ -71,9 +71,9 @@ export class ProductComponent implements OnInit {
   public selectedVariants: Variation;
   public isLoading = true;
   public hasError = false;
-
+  // PRODUCT DETAILS API
   private apiUrl =
-    "https://run.mocky.io/v3/64f93d7d-04ed-427b-ad0d-4d74ab7b00a6";
+    "https://run.mocky.io/v3/fac94be6-f5b1-4574-bca8-e2cb49ab1676";
 
   constructor(
     private route: ActivatedRoute,

@@ -55,10 +55,6 @@ export class ProductBoxTwoComponent {
     }
   }
 
-  ngOnInit() {
-    console.log(this.product);
-  }
-
   addToWishlist(product: Product) {
     if (
       this.store.selectSnapshot(

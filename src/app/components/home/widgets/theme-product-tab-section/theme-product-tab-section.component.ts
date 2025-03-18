@@ -85,10 +85,11 @@ export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
     this.fetchProductsFromAPI();
   }
 
+  // PRODUCT API
   fetchProductsFromAPI() {
     this.http
       .get<Product[]>(
-        "https://run.mocky.io/v3/64f93d7d-04ed-427b-ad0d-4d74ab7b00a6"
+        "https://run.mocky.io/v3/a3afb419-1b62-4317-8f7f-1399594c5200"
       )
       .subscribe(
         (response) => {
@@ -101,10 +102,12 @@ export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
       );
   }
 
+  // CATEGORY API
+
   fetchCategoriesFromAPI() {
     this.http
       .get<Category[]>(
-        "https://run.mocky.io/v3/17e24292-75ba-4fe9-96fc-36f39409c51d"
+        "https://run.mocky.io/v3/c803621b-48a7-47c2-a1a8-f010196d737b"
       )
       .subscribe(
         (response) => {
