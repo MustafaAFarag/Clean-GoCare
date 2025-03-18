@@ -37,7 +37,7 @@
                       <div class="slider-main-img">
                         <video class="w-100" controls>
                           <source
-                            [src]="getImageUrl(image)"
+                            src="assets/images/placeholder/product.png"
                             [type]="image.mime_type"
                           />
                         </video>
@@ -46,7 +46,7 @@
                       <div class="slider-main-img">
                         <audio controls>
                           <source
-                            [src]="getImageUrl(image)"
+                            src="assets/images/placeholder/product.png"
                             [type]="image.mime_type"
                           />
                         </audio>
@@ -56,8 +56,8 @@
                         @if(isBrowser) {
                         <lib-ngx-image-zoom
                           [zoomMode]="'click'"
-                          thumbImage="assets/images/placeholder/category.png"
-                          fullImage="assets/images/placeholder/category.png"
+                          [thumbImage]="selectedImageUrl"
+                          [fullImage]="selectedImageUrl"
                           [magnification]="2"
                           [enableScrollZoom]="true"
                           [enableLens]="true"
@@ -73,7 +73,7 @@
                   </owl-carousel-o>
                   @if(!product.product_galleries?.length){
                   <img
-                    src="assets/images/placeholder/category.png"
+                    src="assets/images/placeholder/product.png"
                     class="img-fluid"
                     [alt]="product.name"
                   />
@@ -116,7 +116,7 @@
                             "
                           >
                             <source
-                              [src]="getImageUrl(image)"
+                              src="assets/images/placeholder/product.png"
                               [type]="image.mime_type"
                             />
                           </video>
@@ -130,7 +130,7 @@
                           </button>
                           }@else {
                           <img
-                            src="assets/images/placeholder/category.png"
+                            [src]="image.original_url"
                             class="img-fluid"
                             [alt]="product.name"
                             (click)="

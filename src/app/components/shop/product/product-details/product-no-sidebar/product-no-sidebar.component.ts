@@ -64,14 +64,12 @@ export class ProductNoSidebarComponent implements OnChanges {
   public activeSlide: string = "0";
   public videType = ["video/mp4", "video/webm", "video/ogg"];
   public audioType = ["audio/mpeg", "audio/wav", "audio/ogg"];
-
+  public selectedImageUrl: string;
   public productMainThumbSlider = data.productMainThumbSlider;
   public productThumbSlider = data.productThumbSlider;
   public isBrowser: boolean;
 
   // Placeholder image URL
-  public placeholderImage =
-    "https://via.assets.so/img.jpg?w=400&h=150&tc=blue&bg=%23cecece";
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -83,13 +81,13 @@ export class ProductNoSidebarComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes["product"] && changes["product"].currentValue) {
       console.log("PRODUCT CHANGED:", this.product);
-      if (this.product.product_thumbnail?.original_url) {
-        console.log("THUMBNAIL", this.product.product_thumbnail.original_url);
-      } else {
-        console.log("Using placeholder for main thumbnail");
-      }
+
+      const firstImage =
+        this.product.product_galleries?.[0]?.original_url ||
+        "assets/images/placeholder/product.png";
+
+      this.selectedImageUrl = firstImage;
     }
-    console.log();
   }
 
   selectedVariant(variant: Variation) {
@@ -101,50 +99,23 @@ export class ProductNoSidebarComponent implements OnChanges {
   }
 
   onSlideChange(event: SlidesOutputData) {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
+    if (!isPlatformBrowser(this.platformId)) return;
 
-    if (
-      !event ||
-      !event.slides ||
-      event.slides.length === 0 ||
-      !event.slides[0]?.id
-    ) {
-      return;
-    }
+    if (!event || !event.slides || event.slides.length === 0) return;
 
     const slideId = event.slides[0].id;
-    if (
-      this.selectedVariation &&
-      this.selectedVariation.variation_galleries &&
-      this.selectedVariation.variation_galleries.length
-    ) {
-      const matchingImage = this.selectedVariation.variation_galleries.find(
-        (images) => images.id.toString() === slideId
-      );
+    const images = this.selectedVariation?.variation_galleries?.length
+      ? this.selectedVariation.variation_galleries
+      : this.product.product_galleries;
 
-      if (matchingImage) {
-        this.activeSlide = matchingImage.id.toString();
-        this.thumbnailCarousel.to(this.activeSlide);
-      }
-    } else {
+    const matchingImage = images?.find(
+      (image) => image.id.toString() === slideId
+    );
+
+    if (matchingImage) {
+      this.selectedImageUrl = matchingImage.original_url; // Update the selected image URL
       this.activeSlide = slideId;
       this.thumbnailCarousel.to(this.activeSlide);
-    }
-  }
-
-  // Helper method to get image URL from gallery item
-  getImageUrl(image: any): string {
-    if (
-      image?.original_url &&
-      image.original_url !== "assets/images/placeholder/product.png"
-    ) {
-      return image.original_url;
-    } else if (image?.asset_url) {
-      return image.asset_url;
-    } else {
-      return this.placeholderImage;
     }
   }
 }
