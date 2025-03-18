@@ -7,7 +7,7 @@ export interface CategoryModel extends PaginateModel {
 
 export interface Category {
   id: number;
-  name: string;
+  name: { en: string; ar: string };
   slug: string;
   description: string;
   type: string;

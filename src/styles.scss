@@ -1,3 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '../public/assets/scss/app.scss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "../public/assets/scss/app.scss";

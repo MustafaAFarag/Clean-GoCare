@@ -106,12 +106,13 @@ export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
 
   fetchCategoriesFromAPI() {
     this.http
-      .get<Category[]>(
-        "https://run.mocky.io/v3/f7445a7d-c63f-4cdf-aa4b-a700fae3b5b5"
+      .get<any>(
+        "https://gocare-back-develop.salonspace1.com/api/services/WebApp/ProductCategory/SearchAll"
       )
       .subscribe(
         (response) => {
-          this.categories = response;
+          this.categories = response.result;
+          console.log("RESPONSE", this.categories);
           if (this.categories.length) {
             this.activeCategory = this.categories[0].id;
             this.selectedCategorySlug = this.categories[0].slug;

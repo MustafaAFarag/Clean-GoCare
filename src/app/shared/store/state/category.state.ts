@@ -214,7 +214,7 @@ export class CategoryState{
         next: result => {
           let categories;
           if(action?.payload?.['search']) {
-            categories = result.data.filter(category => category.name.toLowerCase().includes(action?.payload?.['search'].toLowerCase()))
+            categories = result.data.filter(category => category.name.en.toLowerCase().includes(action?.payload?.['search'].toLowerCase()))
           } else {
             categories = result.data;
           }

@@ -37,7 +37,7 @@
       @for(category of categories; track category){
       <li [class.current]="activeCategory == category.id">
         <a href="javascript:void(0)" (click)="changeTab(category)">{{
-          category.name
+          category.name.en
         }}</a>
       </li>
       }
@@ -48,7 +48,7 @@
     @for(category of categories; track category){
     <li [class.current]="activeCategory == category.id">
       <a href="javascript:void(0)" (click)="changeTab(category)">{{
-        category.name
+        category.name.en
       }}</a>
     </li>
     }

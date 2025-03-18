@@ -56,7 +56,7 @@ export class CategoryComponent {
       this.category$.subscribe(category => {
         this.category = category
         this.breadcrumb.title = `Category: ${this.category?.name}`
-        this.breadcrumb.items[0].label = this.category?.name
+        this.breadcrumb.items[0].label = this.category?.name.en
       })
 
       const category = this.route.snapshot.paramMap.get('slug')
