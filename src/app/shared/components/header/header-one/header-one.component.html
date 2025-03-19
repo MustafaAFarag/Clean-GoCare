@@ -1,8 +1,11 @@
-<header [class]="!  (stick && sticky) ? class : ''" [ngClass]="stick && sticky ? 'sticky fixed' : ''">
+<header
+  [class]="!(stick && sticky) ? class : ''"
+  [ngClass]="stick && sticky ? 'sticky fixed' : ''"
+>
   @if(data?.header?.page_top_bar_enable){
   <app-top-bar [data]="data"></app-top-bar>
   }
-  <div class="metro">
+  <div class="metro bg-[#FAFAF2]">
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -27,8 +30,7 @@
                     </li>
                     <li class="onhover-div">
                       <a href="javascript:void(0)" (click)="reDirectWishlist()">
-                        <i class="ri-heart-line">
-                        </i>
+                        <i class="ri-heart-line"> </i>
                       </a>
                     </li>
                     <li class="onhover-div">
@@ -47,4 +49,3 @@
     </div>
   </div>
 </header>
-
