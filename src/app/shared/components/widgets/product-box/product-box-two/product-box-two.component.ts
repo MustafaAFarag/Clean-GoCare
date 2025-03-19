@@ -16,7 +16,6 @@ import {
 import { DisplayVariantAttributesComponent } from "../../display-variant-attributes/display-variant-attributes.component";
 import { ProductBoxImageVariantComponent } from "../widgets/image-variant/image-variant.component";
 import { ServicesService } from "../../../../../components/services/services/services.service";
-import { RealCategory } from "../../../../interface/category.interface";
 import { environment } from "../../../../../../environments/environment.development";
 
 export interface result {

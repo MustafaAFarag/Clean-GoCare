@@ -90,7 +90,7 @@
 </div>
 } @if(style == 'basic'){
 <div class="row g-4 ratio_square">
-  @if(!slider){ @for(category of testingCategories; track category){
+  @if(!slider){ @for(category of categories; track category){
   <div class="col-xl-2 col-sm-3 col-4">
     <a href="javascript:void(0)" [routerLink]="['/category', category.slug]">
       <div class="img-category">

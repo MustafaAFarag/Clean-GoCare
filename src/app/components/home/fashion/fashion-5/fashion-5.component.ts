@@ -11,7 +11,6 @@ import { ThemeSocialMediaComponent } from "../../widgets/theme-social-media/them
 import { ThemeOptionService } from "../../../../shared/services/theme-option.service";
 
 import { FashionFive } from "../../../../shared/interface/theme.interface";
-import { RealCategory } from "../../../../shared/interface/category.interface";
 
 import { GetCategories } from "../../../../shared/store/action/category.action";
 import { GetProductByIds } from "../../../../shared/store/action/product.action";
@@ -45,7 +44,6 @@ export class Fashion5Component {
   @Input() data?: FashionFive;
   @Input() slug: string;
 
-  public realCategories: RealCategory[] = [];
   public options = productSlider;
   public SocialMediaSlider = SocialMediaSlider;
   private platformId: boolean;
@@ -57,12 +55,6 @@ export class Fashion5Component {
     private ServicesService: ServicesService
   ) {
     this.platformId = isPlatformBrowser(platformId);
-  }
-
-  ngOnInit() {
-    this.ServicesService.getCategories().subscribe((response) => {
-      this.realCategories = response.result;
-    });
   }
 
   ngOnChanges() {

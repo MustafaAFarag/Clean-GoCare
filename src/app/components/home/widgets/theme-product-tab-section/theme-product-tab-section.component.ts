@@ -10,7 +10,6 @@ import { ProductBoxComponent } from "../../../../shared/components/widgets/produ
 import {
   Category,
   CategoryModel,
-  RealCategory,
 } from "../../../../shared/interface/category.interface";
 import { Params } from "../../../../shared/interface/core.interface";
 import { Product } from "../../../../shared/interface/product.interface";

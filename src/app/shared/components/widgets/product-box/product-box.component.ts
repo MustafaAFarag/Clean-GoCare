@@ -22,7 +22,6 @@ import { ProductBoxThreeComponent } from "./product-box-three/product-box-three.
 import { ProductBoxTwelveComponent } from "./product-box-twelve/product-box-twelve.component";
 import { ProductBoxTwoComponent } from "./product-box-two/product-box-two.component";
 import { ServicesService } from "../../../../components/services/services/services.service";
-import { RealCategory } from "../../../interface/category.interface";
 
 @Component({
   selector: "app-product-box",
@@ -56,7 +55,6 @@ export class ProductBoxComponent {
 
   public path: string;
   public variant: string;
-  public realCategories: RealCategory[] = [];
 
   constructor(
     public route: ActivatedRoute,
@@ -67,12 +65,6 @@ export class ProductBoxComponent {
     this.route.queryParams.subscribe((params) => (this.path = params["theme"]));
     this.setVariant();
     this.productBox$.subscribe((res) => (this.variant = res));
-  }
-
-  ngOnInit() {
-    this.ServicesService.getCategories().subscribe((response) => {
-      this.realCategories = response.result;
-    });
   }
 
   setVariant() {
