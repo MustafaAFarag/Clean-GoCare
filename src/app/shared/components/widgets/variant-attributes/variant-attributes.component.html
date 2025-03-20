@@ -1,5 +1,5 @@
 @for(attribute of attributes; track attribute; let i = $index){
-<div class="variation-box" (mouseleave)="removeVariation()">
+<div class="variation-box">
   <h4 class="sub-title">{{ attribute?.name }}:</h4>
   @if(attribute?.style == 'dropdown' || isAllVariantStyleDropdown){
   <select
@@ -51,11 +51,6 @@
     >
       <span
         (click)="setVariant(product.variations, value)"
-        (mouseover)="
-          !soldOutAttributesIds.includes(value.id) &&
-            variant_hover &&
-            setVariant(product.variations, value, 'hover')
-        "
         [ngStyle]="{ 'background-color': value.hex_color }"
       ></span>
     </li>
@@ -72,22 +67,12 @@
         [type]="'button'"
         [spinner]="false"
         (click)="setVariant(product.variations, value)"
-        (mouseover)="
-          !soldOutAttributesIds.includes(value.id) &&
-            variant_hover &&
-            setVariant(product.variations, value, 'hover')
-        "
       >
         {{ value?.value }}
       </app-button>
     </li>
     } @else if(attribute.style == 'image'){
     <li
-      (mouseover)="
-        !soldOutAttributesIds.includes(value.id) &&
-          variant_hover &&
-          setVariant(product.variations, value, 'hover')
-      "
       (click)="setVariant(product.variations, value)"
       [class.active]="
         variantIds.includes(value.id) &&
@@ -111,11 +96,6 @@
           [checked]="
             variantIds.includes(value.id) &&
             !soldOutAttributesIds.includes(value.id)
-          "
-          (mouseover)="
-            !soldOutAttributesIds.includes(value.id) &&
-              variant_hover &&
-              setVariant(product.variations, value, 'hover')
           "
           [disabled]="soldOutAttributesIds.includes(value.id)"
           [ngClass]="{ disabled: soldOutAttributesIds.includes(value.id) }"
@@ -155,11 +135,6 @@
       <a>
         <img
           src="assets/images/placeholder/product.png"
-          (mouseover)="
-            !soldOutAttributesIds.includes(value.id) &&
-              variant_hover &&
-              setVariant(product.variations, value, 'hover')
-          "
           (click)="setVariant(product.variations, value)"
         />
         <h5>{{ value.name }}</h5>
@@ -180,11 +155,6 @@
         [type]="'button'"
         [spinner]="false"
         (click)="setVariant(product.variations, value)"
-        (mouseover)="
-          !soldOutAttributesIds.includes(value.id) &&
-            variant_hover &&
-            setVariant(product.variations, value, 'hover')
-        "
       >
         {{ value?.value }}
       </app-button>
