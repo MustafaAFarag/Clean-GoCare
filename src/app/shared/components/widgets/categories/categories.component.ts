@@ -74,7 +74,7 @@ export class CategoriesComponent implements OnInit {
 
   getFullImageUrl(relativePath?: string): string {
     if (!relativePath) return "assets/default-image.jpg";
-    return `${environment.apiUrl}${relativePath.replace(/\\/g, "/")}`;
+    return `${environment.apiImageUrl}${relativePath.replace(/\\/g, "/")}`;
   }
 
   redirectToCollection(slug: string) {

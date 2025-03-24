@@ -73,7 +73,7 @@ export class ProductComponent implements OnInit {
   public hasError = false;
   // PRODUCT DETAILS API
   private apiUrl =
-    "https://run.mocky.io/v3/56e1f09c-9198-4e70-8299-8272ba00a850";
+    "https://run.mocky.io/v3/a4b1936f-326f-465d-b27e-1fcb555fb099";
 
   constructor(
     private route: ActivatedRoute,

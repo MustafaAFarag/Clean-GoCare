@@ -27,9 +27,9 @@
                     (changed)="onSlideChange($event)"
                   >
                     @if(product.product_galleries?.length || selectedVariation
-                    && selectedVariation.variation_galleries.length){ @for(image
-                    of (selectedVariation &&
-                    selectedVariation.variation_galleries.length ?
+                    && selectedVariation.variation_galleries?.length){
+                    @for(image of (selectedVariation &&
+                    selectedVariation.variation_galleries?.length ?
                     selectedVariation.variation_galleries :
                     product.product_galleries); track image; let i = $index){
                     <ng-template carouselSlide [id]="image.id.toString()">
@@ -86,7 +86,7 @@
               </div>
 
               @if(product.product_galleries?.length || selectedVariation &&
-              selectedVariation.variation_galleries.length){
+              selectedVariation.variation_galleries?.length){
               <div class="col-12">
                 <div class="slider-nav">
                   <owl-carousel-o
@@ -94,7 +94,7 @@
                     #thumbnailCarousel
                   >
                     @for(image of (selectedVariation &&
-                    selectedVariation.variation_galleries.length ?
+                    selectedVariation.variation_galleries?.length ?
                     selectedVariation.variation_galleries :
                     product.product_galleries); track image){
                     <ng-template carouselSlide [id]="image.id.toString()">

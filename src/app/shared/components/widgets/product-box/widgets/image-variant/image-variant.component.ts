@@ -52,7 +52,7 @@ export class ProductBoxImageVariantComponent {
     if (!relativePath) {
       return "assets/default-image.jpg";
     }
-    return `${environment.apiUrl}${relativePath.replace(/\\/g, "/")}`;
+    return `${environment.apiImageUrl}${relativePath.replace(/\\/g, "/")}`;
   }
 
   ngOnInit() {
