@@ -1,6 +1,10 @@
 <a href="javascript:void(0)" [routerLink]="['/']">
   <img
-    src="assets/images/settings/logo-berry.png"
+    [src]="
+      themeService.theme === 'GoCare'
+        ? 'assets/images/settings/gocare/gocare-logo.png'
+        : 'assets/images/settings/logo-berry.png'
+    "
     class="h-10 w-auto"
     alt="logo"
   />

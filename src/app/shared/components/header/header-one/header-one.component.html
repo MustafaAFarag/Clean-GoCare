@@ -25,6 +25,28 @@
               <div>
                 <div class="icon-nav">
                   <ul>
+                    <!-- Theme Toggle Button -->
+                    <li class="onhover-div">
+                      <div class="theme-toggle">
+                        <button
+                          (click)="toggleTheme()"
+                          class="theme-toggle-btn"
+                        >
+                          <span class="theme-label">{{
+                            currentTheme === "Berryat"
+                              ? "Switch to GoCare"
+                              : "Switch to Berryat"
+                          }}</span>
+                          <i
+                            [class]="
+                              currentTheme === 'Berryat'
+                                ? 'ri-moon-line'
+                                : 'ri-sun-line'
+                            "
+                          ></i>
+                        </button>
+                      </div>
+                    </li>
                     <li class="onhover-div">
                       <app-search></app-search>
                     </li>
