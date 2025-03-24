@@ -16,7 +16,7 @@ export class ThemeService {
       | "Berryat"
       | "GoCare";
     if (savedTheme) {
-      this.toggleTheme(savedTheme); // Ensure correct theme is applied on init
+      this.toggleTheme(savedTheme);
     }
   }
 
