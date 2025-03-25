@@ -62,9 +62,7 @@ export class CategoriesComponent implements OnInit {
         (response) => {
           this.categories = response.result;
           console.log("Fetched Categories:", this.categories);
-          this.categories.forEach((category) => {
-            console.log("URL:", this.getFullImageUrl(category.imageUrl));
-          });
+          
         },
         (error) => {
           console.error("Error fetching categories:", error);
@@ -74,8 +72,10 @@ export class CategoriesComponent implements OnInit {
 
   getFullImageUrl(relativePath?: string): string {
     if (!relativePath) return "assets/default-image.jpg";
-    return `${environment.apiImageUrl}${relativePath.replace(/\\/g, "/")}`;
+    return `${environment.apiUrl}/Attachments${relativePath.replace(/\\/g, "/")}`;
   }
+  
+  
 
   redirectToCollection(slug: string) {
     let index = this.selectedCategorySlug.indexOf(slug);

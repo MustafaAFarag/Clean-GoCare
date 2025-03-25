@@ -47,12 +47,12 @@ export class ProductBoxImageVariantComponent {
   };
 
   constructor(private servicesService: ServicesService) {}
-
   getFullImageUrl(relativePath?: string): string {
-    if (!relativePath) {
-      return "assets/default-image.jpg";
-    }
-    return `${environment.apiImageUrl}${relativePath.replace(/\\/g, "/")}`;
+    if (!relativePath) return "assets/default-image.jpg";
+    return `${environment.apiUrl}/Attachments${relativePath.replace(
+      /\\/g,
+      "/"
+    )}`;
   }
 
   ngOnInit() {
