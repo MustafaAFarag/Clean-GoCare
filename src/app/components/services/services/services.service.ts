@@ -66,4 +66,25 @@ export class ServicesService {
       "https://run.mocky.io/v3/ca99de74-6279-4a10-ae8f-b21af69569ac"
     );
   }
+
+  // CATEGORY SIDEBAR API
+
+  getMockCategorySidebar() {
+    return this.http.get(
+      "https://run.mocky.io/v3/fbcfb9fb-48f1-4c5c-be09-2f3fbbcac6d2"
+    );
+  }
+
+  // COLLECTION PRODUCT API
+  getMockCollectionProduct() {
+    return this.http.get(
+      "https://run.mocky.io/v3/b9e47e82-f175-4845-b14b-65828299110a"
+    );
+  }
+
+  getMockBrandsSidebar() {
+    return this.http.get(
+      "https://run.mocky.io/v3/733761bf-dbb4-402c-8fe4-6c9f20fd33c1"
+    );
+  }
 }
