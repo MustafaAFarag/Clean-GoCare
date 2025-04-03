@@ -51,9 +51,19 @@ export class ServicesService {
     );
   }
 
-  getProductDetails() {
+  // -------------------------- MOCK API -------------------------------------------
+
+  // Product API
+  getMockAllProductVariantsForClient() {
     return this.http.get(
       "https://run.mocky.io/v3/fc56610e-2030-4bdc-b5ad-676bb853397a"
+    );
+  }
+
+  // PRODUCT DETAILS API
+  getMockProductDetails() {
+    return this.http.get(
+      "https://run.mocky.io/v3/ca99de74-6279-4a10-ae8f-b21af69569ac"
     );
   }
 }

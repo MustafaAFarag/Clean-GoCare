@@ -32,6 +32,7 @@ import { ProductVerticalTabComponent } from "./product-details/product-vertical-
 import { RelatedProductComponent } from "./product-details/widgets/related-product/related-product.component";
 import { StickyCheckoutComponent } from "./product-details/widgets/sticky-checkout/sticky-checkout.component";
 import { SeoService } from "../../../shared/services/seo.service";
+import { ServicesService } from "../../services/services/services.service";
 
 @Component({
   selector: "app-product",
@@ -79,6 +80,7 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private seoService: SeoService,
     private http: HttpClient,
+    private servicesService: ServicesService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -107,15 +109,15 @@ export class ProductComponent implements OnInit {
     this.isLoading = true;
     this.hasError = false;
 
-    this.http
-      .get<Product>(this.apiUrl)
+    this.servicesService
+      .getMockProductDetails()
       .pipe(
         finalize(() => {
           this.isLoading = false;
         })
       )
       .subscribe(
-        (response) => {
+        (response: any) => {
           console.log("API Response:", response);
           if (response) {
             this.product = response;
@@ -126,7 +128,7 @@ export class ProductComponent implements OnInit {
             this.hasError = true;
           }
         },
-        (error) => {
+        (error: any) => {
           console.error("Error fetching product data:", error);
           this.hasError = true;
         }

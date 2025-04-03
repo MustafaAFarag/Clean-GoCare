@@ -77,7 +77,7 @@ export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
     private store: Store,
     public productService: ProductService,
     private http: HttpClient,
-    private serviceServices: ServicesService
+    private servicesService: ServicesService
   ) {}
 
   ngOnInit() {
@@ -87,42 +87,34 @@ export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
 
   // PRODUCT API
   fetchProductsFromAPI() {
-    this.http
-      .get<any[]>(
-        "https://run.mocky.io/v3/fc56610e-2030-4bdc-b5ad-676bb853397a"
-      )
-      .subscribe(
-        (response) => {
-          this.allProducts = response;
-          this.filterProducts();
-          console.log("PRODUCT", this.allProducts);
-        },
-        (error) => {
-          console.error("Error fetching products:", error);
-        }
-      );
+    this.servicesService.getMockAllProductVariantsForClient().subscribe(
+      (response: any) => {
+        this.allProducts = response;
+        this.filterProducts();
+        console.log("PRODUCT", this.allProducts);
+      },
+      (error) => {
+        console.error("Error fetching products:", error);
+      }
+    );
   }
 
   fetchCategoriesFromAPI() {
-    this.http
-      .get<any>(
-        "https://gocare-back-develop.salonspace1.com/api/services/WebApp/ProductCategory/SearchAll"
-      )
-      .subscribe(
-        (response) => {
-          this.categories = response.result;
-          console.log("RESPONSE", this.categories);
-          if (this.categories.length) {
-            this.activeCategory = this.categories[0].id;
-            this.selectedCategorySlug = this.categories[0].slug;
-            this.filterProducts();
-          }
-          console.log("Fetched Categories:", this.categories);
-        },
-        (error) => {
-          console.error("Error fetching categories:", error);
+    this.servicesService.getCategories().subscribe(
+      (response) => {
+        this.categories = response.result;
+        console.log("RESPONSE", this.categories);
+        if (this.categories.length) {
+          this.activeCategory = this.categories[0].id;
+          this.selectedCategorySlug = this.categories[0].slug;
+          this.filterProducts();
         }
-      );
+        console.log("Fetched Categories:", this.categories);
+      },
+      (error) => {
+        console.error("Error fetching categories:", error);
+      }
+    );
   }
 
   filterProducts() {
