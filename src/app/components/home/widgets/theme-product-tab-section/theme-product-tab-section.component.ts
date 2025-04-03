@@ -76,7 +76,8 @@ export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     public productService: ProductService,
-    private http: HttpClient
+    private http: HttpClient,
+    private serviceServices: ServicesService
   ) {}
 
   ngOnInit() {
@@ -87,21 +88,20 @@ export class ThemeProductTabSectionComponent implements OnInit, OnDestroy {
   // PRODUCT API
   fetchProductsFromAPI() {
     this.http
-      .get<Product[]>(
-        "https://run.mocky.io/v3/08525c91-a54c-48ca-ae19-5b3d5509e1ad"
+      .get<any[]>(
+        "https://run.mocky.io/v3/fc56610e-2030-4bdc-b5ad-676bb853397a"
       )
       .subscribe(
         (response) => {
           this.allProducts = response;
           this.filterProducts();
+          console.log("PRODUCT", this.allProducts);
         },
         (error) => {
           console.error("Error fetching products:", error);
         }
       );
   }
-
-  // CATEGORY API
 
   fetchCategoriesFromAPI() {
     this.http

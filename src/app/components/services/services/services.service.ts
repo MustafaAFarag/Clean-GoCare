@@ -10,12 +10,14 @@ import { ApiEndPoint } from "../../../shared/constants/apis.constant";
 export class ServicesService {
   constructor(private http: HttpClient) {}
 
+  // CATEGORY API
   getCategories(): Observable<any> {
     return this.http.get<any>(
       `${environment.apiUrl}/${ApiEndPoint.allCategoriesApi}`
     );
   }
 
+  // Product API
   getAllProductVariantsForClient(
     filters: {
       pageNumber?: number;
@@ -46,6 +48,12 @@ export class ServicesService {
     return this.http.post<any>(
       `${environment.apiUrl}/${ApiEndPoint.getAllProductVariantsForClient}`,
       body
+    );
+  }
+
+  getProductDetails() {
+    return this.http.get(
+      "https://run.mocky.io/v3/fc56610e-2030-4bdc-b5ad-676bb853397a"
     );
   }
 }

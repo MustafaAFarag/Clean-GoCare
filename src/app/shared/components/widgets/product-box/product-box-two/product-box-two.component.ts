@@ -1,10 +1,9 @@
 import { Component, Input } from "@angular/core";
 import { Product, Variation } from "../../../../interface/product.interface";
-import { NgbModule, NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { CommonModule } from "@angular/common";
 import { CurrencySymbolPipe } from "../../../../pipe/currency.pipe";
 import { RouterModule } from "@angular/router";
-import { ProductCartButtonComponent } from "../widgets/product-cart-button/product-cart-button.component";
 import { ProductHoverActionComponent } from "../widgets/product-hover-action/product-hover-action.component";
 import { Store } from "@ngxs/store";
 import { TranslateModule } from "@ngx-translate/core";
@@ -15,8 +14,6 @@ import {
 } from "../../../../store/action/wishlist.action";
 import { DisplayVariantAttributesComponent } from "../../display-variant-attributes/display-variant-attributes.component";
 import { ProductBoxImageVariantComponent } from "../widgets/image-variant/image-variant.component";
-import { ServicesService } from "../../../../../components/services/services/services.service";
-import { environment } from "../../../../../../environments/environment.development";
 
 export interface result {
   value: Variation;
@@ -30,7 +27,6 @@ export interface result {
     NgbModule,
     CurrencySymbolPipe,
     RouterModule,
-    ProductCartButtonComponent,
     ProductHoverActionComponent,
     TranslateModule,
     CartButtonComponent,
@@ -42,7 +38,7 @@ export interface result {
   styleUrl: "./product-box-two.component.scss",
 })
 export class ProductBoxTwoComponent {
-  @Input() product: Product;
+  @Input() product: any;
 
   public selectedVariation: Variation;
 

@@ -1,136 +1,177 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, Input, SimpleChanges, ViewChild } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { SearchDropdownComponent } from './search-dropdown/search-dropdown.component';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Select, Store } from '@ngxs/store';
- import { Observable, Subscription, debounceTime, distinctUntilChanged, interval } from 'rxjs';
-import { Category, CategoryModel } from '../../../../interface/category.interface';
-import { Product } from '../../../../interface/product.interface';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GetSearchByCategory } from '../../../../store/action/category.action';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SearchModalComponent } from '../../../widgets/modal/search-modal/search-modal.component';
-import { GetProductBySearchList } from '../../../../store/action/product.action';
-import { MenuService } from '../../../../services/menu.service';
-import { ProductState } from '../../../../store/state/product.state';
-import { CategoryState } from '../../../../store/state/category.state';
-import { ClickOutsideDirective } from '../../../../directive/outside.directive';
+import { CommonModule } from "@angular/common";
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
+import { SearchDropdownComponent } from "./search-dropdown/search-dropdown.component";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Select, Store } from "@ngxs/store";
+import {
+  Observable,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+  interval,
+} from "rxjs";
+import {
+  Category,
+  CategoryModel,
+} from "../../../../interface/category.interface";
+import { Product } from "../../../../interface/product.interface";
+import { ActivatedRoute, Router } from "@angular/router";
+import { GetSearchByCategory } from "../../../../store/action/category.action";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { SearchModalComponent } from "../../../widgets/modal/search-modal/search-modal.component";
+import { GetProductBySearchList } from "../../../../store/action/product.action";
+import { MenuService } from "../../../../services/menu.service";
+import { ProductState } from "../../../../store/state/product.state";
+import { CategoryState } from "../../../../store/state/category.state";
+import { ClickOutsideDirective } from "../../../../directive/outside.directive";
 
 @Component({
-  selector: 'app-search',
+  selector: "app-search",
   standalone: true,
-  imports: [CommonModule, TranslateModule, FormsModule, ReactiveFormsModule,
-    SearchDropdownComponent, ClickOutsideDirective],
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.scss'
+  imports: [
+    CommonModule,
+    TranslateModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SearchDropdownComponent,
+    ClickOutsideDirective,
+  ],
+  templateUrl: "./search.component.html",
+  styleUrl: "./search.component.scss",
 })
 export class SearchComponent {
-
   @Input() style: string;
 
   public isOpen: boolean = false;
 
-  @ViewChild('resultsContainer') resultsContainer: ElementRef;
-  @Select(ProductState.productBySearchList) productBySearch$: Observable<Product[]>;
+  @ViewChild("resultsContainer") resultsContainer: ElementRef;
+  @Select(ProductState.productBySearchList) productBySearch$: Observable<
+    Product[]
+  >;
   @Select(CategoryState.category) category$: Observable<CategoryModel>;
-  @Select(CategoryState.searchByCategory) searchCategory$: Observable<Category[]>;
+  @Select(CategoryState.searchByCategory) searchCategory$: Observable<
+    Category[]
+  >;
 
   public term = new FormControl();
-  public searchText: string = '';
-  public selectedCategory = new FormControl('');
+  public searchText: string = "";
+  public selectedCategory = new FormControl("");
   public show: boolean = false;
-  public isOpenResult = false
+  public isOpenResult = false;
   public product: Product[];
   public filteredResults: Product[] = [];
   public filteredCategory: Category[] = [];
   public selectedResultIndex = -1;
   public categories: Category[];
-  public textToType = 'Search with brand and category...';
-  public typedText = '';
+  public textToType = "Search with brand and category...";
+  public typedText = "";
   public animationSubscription: Subscription | undefined;
 
-
-  constructor(private route: ActivatedRoute,
-    private router: Router, private store: Store,
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private store: Store,
     public menuService: MenuService,
-    private modal: NgbModal) {
-    this.category$.subscribe(res => this.categories = res.data.filter(category => category.type == 'product'));
-      this.store.dispatch(new GetSearchByCategory({ status: 1, paginate: 4 }));
-      this.searchCategory$.subscribe(categories => {
-        this.filteredCategory = categories
-      });
+    private modal: NgbModal
+  ) {
+    this.category$.subscribe(
+      (res) =>
+        (this.categories = res.data.filter(
+          (category) => category.type == "product"
+        ))
+    );
+    this.store.dispatch(new GetSearchByCategory({ status: 1, paginate: 4 }));
+    this.searchCategory$.subscribe((categories) => {
+      this.filteredCategory = categories;
+    });
 
-      this.productBySearch$.subscribe(item => this.product = item);
-      this.selectedCategory.valueChanges.subscribe(data => {
-        this.isOpenResult = false;
-        let category = data ?  { status: 1, category_id: data } : {status: 1};
-        this.store.dispatch(new GetProductBySearchList(category))
-        this.store.dispatch(new GetSearchByCategory(data ?  { status: 1, ids: data } : { status: 1, paginate: 4 }))
-      })
+    this.productBySearch$.subscribe((item) => (this.product = item));
+    this.selectedCategory.valueChanges.subscribe((data) => {
+      this.isOpenResult = false;
+      let category = data ? { status: 1, category_id: data } : { status: 1 };
+      this.store.dispatch(new GetProductBySearchList(category));
+      this.store.dispatch(
+        new GetSearchByCategory(
+          data ? { status: 1, ids: data } : { status: 1, paginate: 4 }
+        )
+      );
+    });
   }
 
   ngOnInit() {
-    if(this.style == 'simple'){
+    if (this.style == "simple") {
       this.startTypingAnimation();
     }
-    this.term.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged()) // Adjust the debounce time as needed (in milliseconds)
+    this.term.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged()) // Adjust the debounce time as needed (in milliseconds)
       .subscribe((inputValue) => {
-        if(inputValue.length >= 1){
+        if (inputValue.length >= 1) {
           this.searchText = inputValue;
           this.filteredResults = this.filterWords(this.term.value).slice(0, 4);
           this.filteredCategory = this.searchCategory(this.searchText);
           this.selectedResultIndex = -1;
-        }else if(inputValue.length == 0){
+        } else if (inputValue.length == 0) {
           this.onInputChange();
         }
       });
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    let data = changes['data']?.currentValue;
-    let ids  =  data?.content?.home_banner?.main_banner?.category_ids;
-    if( ids && ids.length) {
-      this.category$.subscribe(res => {
-        this.categories = res.data.filter(category => ids?.includes(category.id))
+    let data = changes["data"]?.currentValue;
+    let ids = data?.content?.home_banner?.main_banner?.category_ids;
+    if (ids && ids.length) {
+      this.category$.subscribe((res) => {
+        this.categories = res.data.filter((category) =>
+          ids?.includes(category.id)
+        );
       });
     }
   }
 
-  @HostListener('document:keydown', ['$event'])
+  @HostListener("document:keydown", ["$event"])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'ArrowUp') {
+    if (event.key === "ArrowUp") {
       this.navigateResults(-1);
-    } else if (event.key === 'ArrowDown') {
+    } else if (event.key === "ArrowDown") {
       this.navigateResults(1);
     }
   }
 
-  openSearchModal(){
-    this.modal.open(SearchModalComponent, { centered: true, size: 'xl',windowClass: 'theme-modal-2 search-modal' });
+  openSearchModal() {
+    this.modal.open(SearchModalComponent, {
+      centered: true,
+      size: "xl",
+      windowClass: "theme-modal-2 search-modal",
+    });
   }
 
   onInputChange() {
-    this.filteredResults = this.product.slice(0, 4) ;
+    this.filteredResults = this.product.slice(0, 4);
     this.filteredCategory = this.searchCategory(this.term.value);
     this.selectedResultIndex = -1;
   }
 
-  focusInput(val:boolean){
-    this.filteredResults = this.product.slice(0, 4)
+  focusInput(val: boolean) {
+    this.filteredResults = this.product.slice(0, 4);
 
-    if(val) this.isOpenResult = val;
+    if (val) this.isOpenResult = val;
   }
 
   filterWords(input: string): Product[] {
-    return this.product.filter(product => {
+    return this.product.filter((product) => {
       const productName = product.name.toLowerCase();
       const inputLower = input.toLowerCase();
-      const words = productName.split(' ');
-      const isMatch = words.some(word => word.startsWith(inputLower));
-      return isMatch
+      const words = productName.split(" ");
+      const isMatch = words.some((word) => word.startsWith(inputLower));
+      return isMatch;
     });
   }
 
@@ -140,11 +181,13 @@ export class SearchComponent {
     this.selectedResultIndex = -1;
   }
 
-  searchCategory(term: string){
-    let params = { status: 1, paginate: 4, search: term }
+  searchCategory(term: string) {
+    let params = { status: 1, paginate: 4, search: term };
     this.store.dispatch(new GetSearchByCategory(params));
-    this.searchCategory$.subscribe(categories => this.filteredCategory = categories);
-    return []
+    this.searchCategory$.subscribe(
+      (categories) => (this.filteredCategory = categories)
+    );
+    return [];
   }
 
   navigateResults(direction: number) {
@@ -158,7 +201,10 @@ export class SearchComponent {
   private scrollResultsContainer() {
     if (this.resultsContainer && this.resultsContainer.nativeElement) {
       const container = this.resultsContainer.nativeElement;
-      const selectedResultElement = this.resultsContainer.nativeElement.querySelector('.result-item.selected');
+      const selectedResultElement =
+        this.resultsContainer.nativeElement.querySelector(
+          ".result-item.selected"
+        );
 
       if (selectedResultElement) {
         const containerRect = container.getBoundingClientRect();
@@ -179,36 +225,36 @@ export class SearchComponent {
     // Perform the action you want when the Enter key is pressed in the input
     if (this.selectedResultIndex !== -1) {
       const selectedItem = this.filteredResults[this.selectedResultIndex];
-      this.router.navigateByUrl(`/product/${selectedItem.slug}`)
+      this.router.navigateByUrl(`/product/${selectedItem.slug}`);
       this.isOpenResult = false;
       this.menuService.isOpenSearch = false;
-      this.selectedResultIndex = 0
-      this.term.patchValue('')
+      this.selectedResultIndex = 0;
+      this.term.patchValue("");
     }
   }
 
   redirectToSearch() {
-    this.router.navigate(['/search'], {
+    this.router.navigate(["/search"], {
       relativeTo: this.route,
       queryParams: {
         category: null,
-        search: this.term.value ? this.term.value : null
+        search: this.term.value ? this.term.value : null,
       },
-      queryParamsHandling: 'merge', // preserve the existing query params in the route
-      skipLocationChange: false  // do trigger navigation
+      queryParamsHandling: "merge", // preserve the existing query params in the route
+      skipLocationChange: false, // do trigger navigation
     });
   }
 
-  toggleSearchBox(){
-    this.show = !this.show
+  toggleSearchBox() {
+    this.show = !this.show;
   }
 
-  openSearch(){
+  openSearch() {
     this.menuService.isOpenSearch = true;
     this.startTypingAnimation();
   }
 
-  closeSearch(){
+  closeSearch() {
     this.menuService.isOpenSearch = false;
     this.isOpenResult = false;
     // if (this.animationSubscription) {
@@ -224,7 +270,7 @@ export class SearchComponent {
   }
 
   startTypingAnimation() {
-    const charactersArray = this.textToType.split('');
+    const charactersArray = this.textToType.split("");
     let currentIndex = 0;
     let eraseMode = false;
 

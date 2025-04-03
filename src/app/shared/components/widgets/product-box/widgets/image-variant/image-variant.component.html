@@ -53,7 +53,7 @@
 } @else {
 <a [routerLink]="['/product', product.slug]">
   <img
-    [src]="product.mainImageUrl"
+    [src]="getFullImageUrl(product.mainImageUrl)"
     class="img-fluid bg-img"
     [alt]="product.name"
   />
