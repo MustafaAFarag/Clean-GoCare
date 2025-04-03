@@ -1014,7 +1014,8 @@ header {
     padding-block: calc(15px + (35 - 15) * ((100vw - 575px) / (1920 - 575)));
 
     img {
-      width: calc(110px + (176 - 110) * ((100vw - 320px) / (1920 - 320)));
+      height: 50px;
+      width: auto;
     }
   }
 
@@ -1207,7 +1208,9 @@ header {
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
                     line-height: 1.1;
-                    font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+                    font-size: calc(
+                      14px + (16 - 14) * ((100vw - 320px) / (1920 - 320))
+                    );
                     font-weight: 600;
 
                     span {
@@ -1277,14 +1280,18 @@ header {
                 gap: 10px;
 
                 a {
-                  font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+                  font-size: calc(
+                    14px + (16 - 14) * ((100vw - 320px) / (1920 - 320))
+                  );
                   border-radius: 0;
                   color: #ffffff;
                   text-transform: capitalize;
                   font-weight: 600;
                   transition: all 0.25s ease-in-out;
                   width: 100%;
-                  padding: calc(9px + (12 - 9) * ((100vw - 320px) / (1920 - 320)))
+                  padding: calc(
+                      9px + (12 - 9) * ((100vw - 320px) / (1920 - 320))
+                    )
                     calc(15px + (29 - 15) * ((100vw - 320px) / (1920 - 320)));
                   background-color: var(--theme-color);
                   border: 1px solid var(--theme-color);
@@ -2592,6 +2599,11 @@ header {
       }
     }
 
+    .header-logo-dims {
+      height: 6px;
+      width: 10px;
+    }
+
     .filter-row {
       display: flex;
       gap: 10px;
@@ -2973,7 +2985,11 @@ body {
 
           &.sticky {
             background: rgb(29, 32, 49);
-            background: linear-gradient(45deg, rgba(29, 32, 49, 1) 0%, rgba(39, 33, 55, 1) 100%);
+            background: linear-gradient(
+              45deg,
+              rgba(29, 32, 49, 1) 0%,
+              rgba(39, 33, 55, 1) 100%
+            );
           }
         }
       }
@@ -2992,7 +3008,11 @@ body {
 
           &.sticky {
             background: rgb(9, 9, 21);
-            background: linear-gradient(90deg, rgba(9, 9, 21, 1) 0%, rgba(64, 46, 62, 1) 100%);
+            background: linear-gradient(
+              90deg,
+              rgba(9, 9, 21, 1) 0%,
+              rgba(64, 46, 62, 1) 100%
+            );
 
             .navbar-nav {
               > li {
