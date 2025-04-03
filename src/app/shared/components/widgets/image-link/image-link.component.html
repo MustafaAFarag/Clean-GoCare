@@ -10,15 +10,12 @@
     class="bg-size"
     [ngClass]="class"
     [ngStyle]="{
-      'background-image':
-        'url(' +
-        (image?.image_url ? StorageURL + image?.image_url : placeholder) +
-        ')'
+      'background-image': 'url(assets/images/placeholder/product.png)'
     }"
   ></div>
   }@else{
   <img
-    [src]="image?.image_url ? StorageURL + image?.image_url : placeholder"
+    src="assets/images/placeholder/product.png"
     class="bg-img w-100"
     alt="banner"
   />
@@ -31,15 +28,12 @@
     class="bg-size"
     [ngClass]="class"
     [ngStyle]="{
-      'background-image':
-        'url(' +
-        (image?.image_url ? StorageURL + image?.image_url : placeholder) +
-        ')'
+      'background-image': 'url(assets/images/placeholder/product.png)'
     }"
   ></div>
   }@else{
   <img
-    [src]="image?.image_url ? StorageURL + image?.image_url : placeholder"
+    src="assets/images/placeholder/product.png"
     class="bg-img w-100"
     alt="banner"
   />
@@ -49,6 +43,7 @@
 @if(image?.redirect_link?.link){
 <a [routerLink]="['/category', image?.redirect_link?.link]">
   @if(bgImage){
+  <!-- Home Banner -->
   <div
     class="bg-size"
     [ngClass]="class"
@@ -56,7 +51,7 @@
       'background-image':
         'url(' +
         (themeService.theme === 'GoCare'
-          ? 'assets/images/settings/gocare/barber1.jpg'
+          ? 'assets/images/settings/gocare/gocare5.png'
           : 'assets/images/settings/fruit.jpg') +
         ')'
     }"
@@ -69,8 +64,13 @@
     }
   </div>
   }@else {
+  <!-- 2nd Banner -->
   <img
-    [src]="image?.image_url ? StorageURL + image?.image_url : placeholder"
+    [src]="
+      themeService.theme === 'GoCare'
+        ? 'assets/images/settings/gocare/gocare6.jpg'
+        : 'assets/images/settings/deals-berry.jpg'
+    "
     class="bg-img w-100"
     alt="banner"
   />
@@ -81,10 +81,7 @@
   class="bg-size"
   [ngClass]="class"
   [ngStyle]="{
-    'background-image':
-      'url(' +
-      (image?.image_url ? StorageURL + image?.image_url : placeholder) +
-      ')'
+    'background-image': 'url(assets/images/placeholder/product.png)'
   }"
 >
   @if(banner_details){
@@ -96,7 +93,7 @@
 </div>
 }@else {
 <img
-  [src]="image?.image_url ? StorageURL + image?.image_url : placeholder"
+  src="assets/images/placeholder/category.png"
   class="bg-img w-100"
   alt="banner"
 />
@@ -108,17 +105,18 @@
     class="bg-size"
     [ngClass]="class"
     [ngStyle]="{
-      'background-image':
-        'url(' +
-        (image?.image_url ? StorageURL + image?.image_url : placeholder) +
-        ')'
+      'background-image': 'url(assets/images/placeholder/product.png)'
     }"
   >
     <ng-content></ng-content>
   </div>
   }@else {
   <img
-    [src]="image?.image_url ? StorageURL + image?.image_url : placeholder"
+    [src]="
+      themeService.theme === 'GoCare'
+        ? 'assets/images/settings/gocare/gocare6.jpg'
+        : 'assets/images/settings/offer-berry.jpg'
+    "
     class="bg-img w-100"
     alt="banner"
   />
@@ -129,17 +127,14 @@
   class="bg-size"
   [ngClass]="class"
   [ngStyle]="{
-    'background-image':
-      'url(' +
-      (image?.image_url ? StorageURL + image?.image_url : placeholder) +
-      ')'
+    'background-image': 'url(assets/images/placeholder/product.png)'
   }"
 >
   <ng-content></ng-content>
 </div>
 }@else {
 <img
-  [src]="image?.image_url ? StorageURL + image?.image_url : placeholder"
+  src="assets/images/placeholder/category.png"
   class="bg-img w-100"
   alt="banner"
 />
@@ -148,15 +143,12 @@
   class="bg-size"
   [ngClass]="class"
   [ngStyle]="{
-    'background-image':
-      'url(' +
-      (image?.image_url ? StorageURL + image?.image_url : placeholder) +
-      ')'
+    'background-image': 'url(assets/images/placeholder/product.png)'
   }"
 ></div>
 }@else {
 <img
-  [src]="image?.image_url ? StorageURL + image?.image_url : placeholder"
+  src="assets/images/placeholder/category.png"
   class="bg-img w-100"
   alt="banner"
 />
